@@ -108,7 +108,7 @@ function drawGeometry() {
   const scale = stackPx / total;
 
   let y = surfaceY;
-  for (let i = media.length - 1; i >= 0; i -= 1) {
+  for (let i = 0; i < media.length; i += 1) {
     const h = drawn[i] * scale;
     el("rect", {
       x: 40, y, width: 300, height: h,
@@ -320,7 +320,7 @@ function stackThumb(sample) {
   const scale = 78 / total;
 
   let y = 92 - 78;
-  for (let i = media.length - 1; i >= 0; i -= 1) {
+  for (let i = 0; i < media.length; i += 1) {
     const h = drawn[i] * scale;
     el("rect", {
       x: 0, y, width: 160, height: h,
