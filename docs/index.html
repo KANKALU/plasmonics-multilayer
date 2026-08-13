@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Luz reflejada en un sistema periódico metal–óxido — Franco Maza García</title>
+<meta name="description" content="Simulación por matriz de transferencia y medición en geometría de Kretschmann de la reflectancia de multicapas metal–óxido, y del mínimo en polarización TE que aparece con dieléctrico grueso.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<div class="beamline" aria-hidden="true"></div>
+
+<header class="site-head">
+  <div class="wrap head-inner">
+    <span class="eyebrow" data-es="ASE III · Universidad Iberoamericana · Ciudad de México · 2026"
+                          data-en="ASE III · Universidad Iberoamericana · Mexico City · 2026"></span>
+    <div class="lang" role="group" aria-label="Language">
+      <button type="button" class="lang-btn is-on" data-lang="es">ES</button>
+      <button type="button" class="lang-btn" data-lang="en">EN</button>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<section class="hero wrap">
+  <h1 data-es="Luz reflejada en un sistema periódico metal–óxido"
+      data-en="Light reflected from a periodic metal–oxide system"></h1>
+  <p class="byline">Franco Maza García · <span data-es="Ingeniería Física" data-en="Engineering Physics"></span></p>
+  <p class="lede"
+     data-es="Un plasmón superficial sólo se excita en polarización TM. En seis muestras multicapa medidas en geometría de Kretschmann apareció un mínimo de reflectancia en TE — y el mismo modelo de matriz de transferencia, sin física adicional, ya lo predecía."
+     data-en="A surface plasmon can only be excited in TM polarisation. Across six multilayer samples measured in the Kretschmann geometry a reflectance minimum showed up in TE — and the same transfer-matrix model, with no extra physics, already predicted it."></p>
+  <div class="cta">
+    <a class="btn btn-primary" href="https://github.com/KANKALU/plasmonics-multilayer" data-es="Ver el repositorio" data-en="View the repository"></a>
+    <a class="btn" href="https://github.com/KANKALU/plasmonics-multilayer/blob/main/report/ASE_III_luz_reflejada_sistema_periodico_metal_oxido.pdf" data-es="Leer el escrito (PDF)" data-en="Read the report (PDF)"></a>
+  </div>
+</section>
+
+<!-- ============ interactive figure ============ -->
+<section class="wrap">
+  <div class="panel figure" id="explorer">
+    <div class="panel-head">
+      <h2 class="panel-title" data-es="Explorador de reflectancia" data-en="Reflectance explorer"></h2>
+      <p class="panel-sub"
+         data-es="Curvas calculadas con el código de este repositorio. Elige una muestra, una longitud de onda y arrastra el ángulo."
+         data-en="Curves computed with the code in this repository. Pick a sample, pick a wavelength, drag the angle."></p>
+    </div>
+
+    <div class="controls">
+      <div class="control">
+        <span class="control-label" data-es="Muestra" data-en="Sample"></span>
+        <div class="chips" id="sample-chips"></div>
+      </div>
+      <div class="control">
+        <span class="control-label" data-es="Longitud de onda" data-en="Wavelength"></span>
+        <div class="chips" id="lambda-chips"></div>
+      </div>
+    </div>
+
+    <div class="figure-grid">
+      <div class="stage">
+        <svg id="geometry" viewBox="0 0 420 320" role="img"
+             aria-label="Kretschmann geometry with the selected layer stack"></svg>
+      </div>
+      <div class="stage">
+        <svg id="chart" viewBox="0 0 520 320" role="img"
+             aria-label="Reflectance versus angle of incidence"></svg>
+      </div>
+    </div>
+
+    <div class="slider-row">
+      <label for="theta" class="control-label">θ</label>
+      <input type="range" id="theta" min="20" max="80" step="0.25" value="55">
+      <output id="theta-out" class="mono">55.00°</output>
+    </div>
+
+    <div class="readout">
+      <div class="read">
+        <span class="dot dot-tm"></span>
+        <span class="read-label mono">R<sub>TM</sub></span>
+        <span class="read-val mono" id="r-tm">—</span>
+      </div>
+      <div class="read">
+        <span class="dot dot-te"></span>
+        <span class="read-label mono">R<sub>TE</sub></span>
+        <span class="read-val mono" id="r-te">—</span>
+      </div>
+      <p class="read-note" id="sample-note"></p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ narrative ============ -->
+<section class="wrap cols">
+  <article>
+    <h3 class="kicker" data-es="La pregunta" data-en="The question"></h3>
+    <p data-es="En el semestre anterior simulé multicapas de oro y Ta₂O₅ sobre BK7 con el método de matriz de transferencia. En dos configuraciones apareció un mínimo de reflectancia en polarización TE, donde la teoría del plasmón superficial dice que no debe haber ninguno. Quedó como pregunta abierta."
+       data-en="The previous semester I simulated gold and Ta₂O₅ multilayers on BK7 with the transfer-matrix method. Two configurations produced a reflectance minimum in TE polarisation, where surface-plasmon theory says there should be none. It was left as an open question."></p>
+  </article>
+  <article>
+    <h3 class="kicker" data-es="El método" data-en="The method"></h3>
+    <p data-es="Derivé la relación de dispersión del plasmón superficial desde las ecuaciones de Maxwell, que deja claro por qué el modo no existe en TE en una interfaz simple. Después medí seis muestras en un montaje de Kretschmann: cinco longitudes de onda, ambas polarizaciones, barrido de 20° a 80° en pasos de 0.1°."
+       data-en="I derived the surface-plasmon dispersion relation from Maxwell's equations, which makes clear why the mode cannot exist in TE at a single interface. Then I measured six samples on a Kretschmann setup: five wavelengths, both polarisations, a 20° to 80° sweep in 0.1° steps."></p>
+  </article>
+  <article>
+    <h3 class="kicker" data-es="El resultado" data-en="The result"></h3>
+    <p data-es="El mínimo en TE aparece sólo cuando el dieléctrico final es grueso: no está en M1, M4 ni M5, y sí está en M6, M7 y M8, con Ta₂O₅ de 70 nm o más. Ocurre igual con oro que con cobre, así que no depende del metal. La simulación lo reproduce sin agregarle nada."
+       data-en="The TE minimum appears only when the final dielectric is thick: absent in M1, M4 and M5, present in M6, M7 and M8, all with 70 nm or more of Ta₂O₅. It behaves the same with gold as with copper, so it does not depend on the metal. The simulation reproduces it with nothing added."></p>
+  </article>
+</section>
+
+<!-- ============ evidence ============ -->
+<section class="wrap">
+  <h2 class="section-title" data-es="La evidencia" data-en="The evidence"></h2>
+  <p class="section-lede"
+     data-es="Mapas de reflectancia en el plano ángulo–longitud de onda. La banda oscura es la resonancia: se corre hacia ángulos menores conforme crece λ y se va angostando. A la izquierda la medición, a la derecha el modelo."
+     data-en="Reflectance maps over the angle–wavelength plane. The dark band is the resonance: it moves to smaller angles as λ grows, narrowing as it goes. Measurement on the left, model on the right."></p>
+
+  <figure class="evidence">
+    <div class="evidence-pair">
+      <img src="figures/m7_TE_experiment.png" alt="Measured TE reflectance map for sample M7" loading="lazy">
+      <img src="figures/m7_TE_simulation.png" alt="Simulated TE reflectance map for sample M7" loading="lazy">
+    </div>
+    <figcaption data-es="M7 — Cu(20 nm) / Ta₂O₅(70 nm), polarización TE. La banda arranca cerca de 600 nm y 60°, y baja de ángulo al subir λ. La franja vertical a 72° en la medición es el ángulo crítico del aceite de inmersión, que no está en el modelo."
+                data-en="M7 — Cu(20 nm) / Ta₂O₅(70 nm), TE polarisation. The band starts near 600 nm and 60°, dropping in angle as λ rises. The vertical stripe at 72° in the measurement is the immersion oil's critical angle, which the model does not include."></figcaption>
+  </figure>
+
+  <figure class="evidence">
+    <div class="evidence-pair">
+      <img src="figures/m8_TE_experiment.png" alt="Measured TE reflectance map for sample M8" loading="lazy">
+      <img src="figures/m8_TE_simulation.png" alt="Simulated TE reflectance map for sample M8" loading="lazy">
+    </div>
+    <figcaption data-es="M8 — Au(20 nm) / Ta₂O₅(70 nm), polarización TE. Mismo dieléctrico, metal distinto, mismo comportamiento: el modo depende de la capa dieléctrica, no del metal."
+                data-en="M8 — Au(20 nm) / Ta₂O₅(70 nm), TE polarisation. Same dielectric, different metal, same behaviour: the mode depends on the dielectric layer, not the metal."></figcaption>
+  </figure>
+</section>
+
+<!-- ============ samples ============ -->
+<section class="wrap">
+  <h2 class="section-title" data-es="Las muestras" data-en="The samples"></h2>
+  <p class="section-lede"
+     data-es="Seis multicapas sobre sustrato de cuarzo de 500 nm, acopladas al prisma BK7 con aceite de inmersión. Las capas depositadas están a escala entre sí."
+     data-en="Six multilayers on a 500 nm quartz substrate, coupled to the BK7 prism with immersion oil. The deposited layers are drawn to scale relative to each other."></p>
+  <div class="sample-grid" id="sample-grid"></div>
+</section>
+
+<!-- ============ repo ============ -->
+<section class="wrap">
+  <h2 class="section-title" data-es="Qué hay en el repositorio" data-en="What is in the repository"></h2>
+  <dl class="repo-list">
+    <div>
+      <dt class="mono">src/plasmonics/</dt>
+      <dd data-es="El método de matriz de transferencia, la carga de constantes ópticas, la definición de las muestras y el procesamiento de las mediciones. Sin dependencias más allá de NumPy, SciPy y Matplotlib."
+          data-en="The transfer-matrix method, optical-constant loading, sample definitions and measurement processing. No dependencies beyond NumPy, SciPy and Matplotlib."></dd>
+    </div>
+    <div>
+      <dt class="mono">notebooks/</dt>
+      <dd data-es="Un recorrido desde una sola interfaz hasta las seis muestras, construido sobre el paquete en lugar de repetirlo."
+          data-en="A walk from a single interface up to the six samples, built on top of the package rather than repeating it."></dd>
+    </div>
+    <div>
+      <dt class="mono">figures/</dt>
+      <dd data-es="Comparaciones medición contra modelo y mapas de reflectancia de las seis muestras, más las figuras que el código regenera por sí solo."
+          data-en="Measurement-versus-model comparisons and reflectance maps for all six samples, plus the figures the code regenerates on its own."></dd>
+    </div>
+    <div>
+      <dt class="mono">scripts/</dt>
+      <dd data-es="Regeneración de figuras y exportación de los datos que alimentan esta página."
+          data-en="Figure regeneration and the export that feeds this page."></dd>
+    </div>
+  </dl>
+</section>
+
+</main>
+
+<footer class="site-foot">
+  <div class="wrap foot-inner">
+    <p data-es="Franco Maza García · Universidad Iberoamericana · abril de 2026"
+       data-en="Franco Maza García · Universidad Iberoamericana · April 2026"></p>
+    <p class="mono foot-links">
+      <a href="https://github.com/KANKALU/plasmonics-multilayer">GitHub</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://refractiveindex.info" data-es="Constantes ópticas: RefractiveIndex.INFO" data-en="Optical constants: RefractiveIndex.INFO"></a>
+    </p>
+  </div>
+</footer>
+
+<script src="assets/app.js"></script>
+</body>
+</html>
