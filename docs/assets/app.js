@@ -83,13 +83,14 @@ function drawGeometry() {
   clear(svg);
   const sample = state.data.samples[state.sample];
 
-  const W = 420, H = 320;
+  const W = 440, H = 320;
   const surfaceY = 190;          // the prism base / stack top boundary
   const cx = 190;                // where the beam meets the surface
 
-  /* prism: a right-angle wedge sitting on the sample */
+  /* prism: a hemicylindrical lens sitting on the sample, flat side down */
+  const prismR = 150;
   el("path", {
-    d: `M 40 ${surfaceY} L 340 ${surfaceY} L 190 ${surfaceY - 135} Z`,
+    d: `M ${cx - prismR} ${surfaceY} A ${prismR} ${prismR} 0 0 1 ${cx + prismR} ${surfaceY} Z`,
     fill: "rgba(255,255,255,.72)", stroke: "var(--rule)", "stroke-width": 1.2,
   }, svg);
   el("text", {
