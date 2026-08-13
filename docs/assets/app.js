@@ -26,7 +26,7 @@ const THETA_C = 41.0;
 /* Above this the immersion oil dominates the measurement. */
 const OIL_ONSET = 70.0;
 
-const state = { data: null, sample: "M7", lambda: "700", theta: 55, lang: "es" };
+const state = { data: null, sample: "M7", lambda: "700", theta: 55, lang: "en" };
 
 const T = {
   noMinimum: { es: "Sin mínimo en TE.", en: "No TE minimum." },
@@ -390,7 +390,7 @@ async function boot() {
   document.querySelectorAll(".lang-btn").forEach((btn) => {
     btn.addEventListener("click", () => applyLanguage(btn.dataset.lang));
   });
-  applyLanguage("es");
+  applyLanguage("en");
 
   let data;
   try {
